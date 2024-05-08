@@ -14,12 +14,14 @@ const MONGO_DB_URL = require("./config/dburl.config");
 mongoose.connect(MONGO_DB_URL);
 app.listen(8000);
 
-app.use("/threads", (req, res, next) => {
-  console.log(req.cookies);
-});
-
+// peralatan cookie
 app.use(cookieParser());
 app.use(express.json());
+
+// app
+app.use("/threads", middleware);
+
+// router
 app.use(authRouter);
 app.use(replyRouter);
 app.use(threadRouter);
