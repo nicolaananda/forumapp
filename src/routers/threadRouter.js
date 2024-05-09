@@ -22,13 +22,13 @@ threadRouter.get("/threads", async (req, res) => {
   const sessionID = req.cookies.session_id;
   const user = await Session.findById(sessionID);
 
-  const newThread = new Thread({
-    title,
-    content,
-    userId: session.userId,
-  });
+  // const newThread = new Thread({
+  //   title,
+  //   content,
+  //   userId: session.userId,
+  // });
 
-  const saveThread = await newThread.save();
+  // const saveThread = await newThread.save();
 
   return res.send("Kamu di thread");
 });

@@ -16,7 +16,7 @@ mongoose.connect(MONGO_DB_URL);
 app.listen(8000);
 
 // peralatan cookie
-app.use(cors({ credentials: true, origin: "http://localhost:5500" }));
+app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 
