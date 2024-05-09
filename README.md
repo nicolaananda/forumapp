@@ -1,4 +1,3 @@
-# forumapp
 # API Design - Task 3: Forum App
 
 ## Requirement
