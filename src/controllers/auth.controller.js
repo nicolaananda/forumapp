@@ -35,7 +35,7 @@ async function handleLoginSession(req, res) {
   // find user
   const user = await User.findOne({ email });
   if (!user) {
-    return res.status(404).json({ message: "User not found" });
+    return res.status(404).json({ message: "User tidak ada" });
   }
   // compare pass
   const isPasswordMatch = await bcrypt.compare(password, user.password);
@@ -47,8 +47,16 @@ async function handleLoginSession(req, res) {
   });
   const session = await newSession.save();
 
+  const UserData = {
+    id: user._id,
+    name: user.name,
+    email: user.email,
+  };
+
   // send id
-  res.cookie("session_id", session.id).send("Login thread success");
+  res
+    .cookie("session_id", session.id)
+    .send({ message: "Login session success", data: UserData });
 }
 
 async function handleRegister(req, res) {
@@ -64,4 +72,17 @@ async function handleRegister(req, res) {
   res.status(201).json({ message: "User has been created", data: user });
 }
 
-module.exports = { handleLoginJWT, handleLoginSession, handleRegister };
+async function handleLogout(req, res) {
+  const session_id = req.cookies.session_id;
+
+  await Session.findByIdAndDelete(session_id);
+
+  return res.send("Berhasil Keluar");
+}
+
+module.exports = {
+  handleLogout,
+  handleLoginJWT,
+  handleLoginSession,
+  handleRegister,
+};

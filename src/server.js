@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const app = express();
+const cors = require("cors");
 const middleware = require("./controllers/middleware.js");
 
 // import routers
@@ -15,11 +16,13 @@ mongoose.connect(MONGO_DB_URL);
 app.listen(8000);
 
 // peralatan cookie
+app.use(cors({ credentials: true, origin: "http://localhost:5500" }));
 app.use(cookieParser());
 app.use(express.json());
 
 // app
 app.use("/threads", middleware);
+app.use("/logout", middleware);
 
 // router
 app.use(authRouter);
