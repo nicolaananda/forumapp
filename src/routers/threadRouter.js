@@ -3,34 +3,14 @@ const threadRouter = express();
 const jwt = require("jsonwebtoken");
 const Session = require("../models/sessionModel");
 const Thread = require("../models/threadModel");
+const threadController = require("../controllers/thread.controller");
 
-// threadRouter.get("/thread", (req, res) => {
-//   const token = req.cookies.token;
+threadRouter.post("/threads", threadController.createThread);
 
-//   try {
-//     const payload = jwt.verify(token, process.env.JWT_SECRET);
-//     console.log(payload);
-//     res.send("Hello Thread");
-//   } catch (error) {
-//     res.status(401).send("Login dulu mas");
-//   }
-// });
+threadRouter.get("/threads", threadController.getAllThreads);
 
-threadRouter.get("/threads", async (req, res) => {
-  const { title, content, userId } = req.body;
+threadRouter.delete("/threads/:id", threadController.deleteThread);
 
-  const sessionID = req.cookies.session_id;
-  const user = await Session.findById(sessionID);
-
-  // const newThread = new Thread({
-  //   title,
-  //   content,
-  //   userId: session.userId,
-  // });
-
-  // const saveThread = await newThread.save();
-
-  return res.send("Kamu di thread");
-});
+threadRouter.get("/threads/:id", threadController.getThreadById);
 
 module.exports = threadRouter;

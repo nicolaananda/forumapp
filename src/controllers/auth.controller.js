@@ -61,7 +61,7 @@ async function handleLoginSession(req, res) {
 
 async function handleRegister(req, res) {
   const { name, email, password } = req.body;
-  const hashedPassword = await bycrypt.hash(password, 12);
+  const hashedPassword = await bcrypt.hash(password, 12);
 
   const newUser = new User({
     name,
